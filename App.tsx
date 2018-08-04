@@ -7,26 +7,78 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import { ConfigManager } from './ConfigManager';
+import { Clock} from './Clock';
+import { Settings} from './Settings';
+
+
+enum Screen {
+    ClockScreen = 0,
+    SettingsScreen
+}
 
 type Props = {};
 export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
-  }
+    state = {
+        appReady: false,
+        currentScreen: 0,
+    }
+    private configManager: ConfigManager;
+
+    constructor(props: object) {
+        super(props);
+        this.configManager = new ConfigManager();
+        this.configManager.initialize()
+            .then(() => {
+                this.setState({ appReady: true });
+            });
+    }
+
+    render() {
+        if (this.state.appReady) {
+            return this.renderAppContent();
+        } else {
+            return this.renderSplashScreen();
+        }
+    }
+
+    renderSplashScreen() {
+        return (
+            <View>
+                <Text>This is splash screen</Text>
+            </View>
+        );
+    }
+
+    renderAppContent() {
+        if(this.state.currentScreen == Screen.ClockScreen) {
+            return (
+                <TouchableWithoutFeedback onLongPress={this.onPress}>
+                    <View style={styles.container}>
+                        <Clock> </Clock>
+                    </View>
+                </TouchableWithoutFeedback>
+            );
+        } else {
+            return (
+                <TouchableWithoutFeedback onLongPress={this.onSettingsClose}>
+                    <View style={styles.container}>
+                        <Settings configManager={this.configManager}> </Settings>
+                    </View>
+                </TouchableWithoutFeedback>
+            );
+        }
+    }
+
+    onPress = () => {
+        this.setState({ currentScreen: Screen.SettingsScreen });
+    }
+
+    onSettingsClose = () => {
+        this.setState({ currentScreen: Screen.ClockScreen });
+    }
 }
 
 const styles = StyleSheet.create({
