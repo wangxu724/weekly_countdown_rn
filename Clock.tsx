@@ -11,16 +11,28 @@ const LEFT_DAY_COLOR = '#1E90FF';
 type Props = {};
 
 export class Clock extends Component<Props> {
+    static navigationOptions = {
+        header: null,
+    };
+
     state = {
         nDay: 0,
         nHour: 0,
         nMinute: 0,
         nSecond: 0
     }
+    interval: number = 0;
 
     constructor(props: Props) {
         super(props);
-        setInterval(this.updateTime, 500);
+    }
+
+    componentDidMount() {
+        this.interval = setInterval(this.updateTime, 500);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
     render() {
         const day = ('0' + String(7 - this.state.nDay)).slice(-2);
@@ -123,5 +135,5 @@ const styles = StyleSheet.create({
         color: 'black',
         opacity: 0.05
     }
-  });
+});
 
