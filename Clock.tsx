@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View } from 'react-native';
-
 import { Bar } from 'react-native-progress';
 
+import { getConfigManager } from './util';
 
 const PASSED_DAY_COLOR = '#32CD32';
 const CURRENT_DAY_COLOR = '#1E90FF'
@@ -22,6 +22,7 @@ export class Clock extends Component<Props> {
         nSecond: 0
     }
     interval: number = 0;
+    configManager = getConfigManager();
 
     constructor(props: Props) {
         super(props);
@@ -59,7 +60,7 @@ export class Clock extends Component<Props> {
     }
 
     updateTime = () => {
-        const weekDayOffset = 0;
+        const weekDayOffset = this.configManager.getWeekStartDay() - 1;
         const day = new Date();
         let nDay = day.getDay();
         nDay = nDay == 0 ? 7 : nDay;

@@ -1,26 +1,32 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Picker } from 'react-native';
 
 import { ConfigManager } from './ConfigManager';
 
+import { getConfigManager } from './util';
 
 type Props = {
-    configManager: ConfigManager
 };
 
 export class SettingsScreen extends Component<Props> {
+    static navigationOptions = {
+        title: 'Settings',
+    };
+
     state = {
-        theme: 'fake theme',
+        theme: 'white',
         clockFace: 'fake clockFace',
         weekStartDay: 'fake weekStartDay'
     };
 
+    configManager = getConfigManager();
+
     constructor(props: Props) {
         super(props);
         Promise.all([
-            this.props.configManager.getTheme(),
-            this.props.configManager.getClockFace(),
-            this.props.configManager.getWeekStartDay()
+            this.configManager.getTheme(),
+            this.configManager.getClockFace(),
+            this.configManager.getWeekStartDay()
         ]).then(([theme, clockFace, weekStartDay]) => {
             this.setState({
                 theme: theme,
@@ -33,39 +39,88 @@ export class SettingsScreen extends Component<Props> {
     render() {
       return (
             <View style={styles.container}>
-                <View style={styles.headerView}>
-                    <Text style={styles.titleStyle}>
-                        Settings
-                    </Text>
+                <View style={styles.setting}>
+                    <Text style={styles.text}>Theme</Text>
+                    <Picker
+                        style={styles.picker}
+                        prompt={'Choose a theme'}
+                        selectedValue={this.state.theme}
+                        onValueChange={this.onThemeSelected}>
+                        <Picker.Item label="White" value="white" />
+                        <Picker.Item label="Yellow" value="yellow" />
+                    </Picker>
                 </View>
-                <Text>
-                    Theme: {this.state.theme}{'\n'}
-                    Clock face: {this.state.clockFace}{'\n'}
-                    Week start day: {this.state.weekStartDay}{'\n'}
-                </Text>
+
+                <View style={styles.setting}>
+                    <Text style={styles.text}>Clock face</Text>
+                    <Picker
+                        style={styles.picker}
+                        prompt={'Choose a clock face'}
+                        selectedValue={this.state.clockFace}
+                        onValueChange={this.onClockFaceSelected}>
+                        <Picker.Item label="Text" value="text" />
+                    </Picker>
+                </View>
+
+                <View style={styles.setting}>
+                    <Text style={styles.text}>Week start on</Text>
+                    <Picker
+                        style={styles.picker}
+                        prompt={'Choose a week start day'}
+                        selectedValue={this.state.weekStartDay}
+                        onValueChange={this.onWeekStartDaySelected}>
+                        <Picker.Item label="Monday" value={1} />
+                        <Picker.Item label="Tuesday" value={2} />
+                        <Picker.Item label="Wednesday" value={3} />
+                        <Picker.Item label="Thursday" value={4} />
+                        <Picker.Item label="Friday" value={5} />
+                        <Picker.Item label="Saturday" value={6} />
+                        <Picker.Item label="Sunday" value={7} />
+                    </Picker>
+                </View>
             </View>
       );
+    }
+
+    onThemeSelected = (value: any, index: number) => {
+        this.configManager.setTheme(value);
+        this.setState({theme: value});
+    }
+
+    onClockFaceSelected = (value: any, index: number) => {
+        this.configManager.setClockFace(value);
+        this.setState({clockFace: value});
+    }
+    onWeekStartDaySelected = (value: number, index: number) => {
+        this.configManager.setWeekStartDay(value);
+        this.setState({weekStartDay: value});
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFC90E',
+        backgroundColor: 'white',
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        top:0,
-        bottom:0,
-        left:0,
-        right:0,
-        position: 'absolute'
     },
-    headerView: {
-        height: 60,
-        backgroundColor: 'white'
+    setting: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        borderColor: '#DCDCDC',
+        borderWidth: 0.2
     },
-    titleStyle: {
-        fontSize: 40
+    text: {
+        fontSize: 20,
+        justifyContent: 'flex-start',
+        padding: 10,
+        flex: 1.5,
+        borderRightColor: '#DCDCDC',
+        borderRightWidth: 0.2
+    },
+    picker: {
+        justifyContent: 'flex-end',
+        flex: 1,
     }
 });
 

@@ -12,7 +12,7 @@ import { createStackNavigator } from 'react-navigation';
 
 import { ConfigManager } from './ConfigManager';
 import { Clock} from './Clock';
-import { Settings} from './Settings';
+import { SettingsScreen } from './SettingsScreen';
 
 
 type Props = {
@@ -46,12 +46,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   }
 });
-
-
-const App = createStackNavigator({
-    SplashScreen: { screen: SplashScreen },
-    ClockScreen: { screen: Clock },
-    SettingsScreen: { screen: Settings }
-  });
-
-export default App;

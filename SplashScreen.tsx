@@ -24,8 +24,8 @@ export class SplashScreen extends Component<Props> {
 
     render() {
         return (
-            <View>
-                <Text>This is splash screen</Text>
+            <View style={{backgroundColor: '#FFC90E'}}>
+                {/* <Text>This is splash screen</Text> */}
             </View>
         );
     }

@@ -7,46 +7,50 @@ const StoreKey_WeekStartDay = 'store_key_weeky_start_day';
 export class ConfigManager {
     private theme = '';
     private clockFace = '';
-    private weekStartDay = '';
+    private weekStartDay = 0;
 
     initialize(): Promise<void> {
         return Promise.all([
-            this.getTheme(),
-            this.getClockFace(),
-            this.getWeekStartDay()]).then(()=>{});
+            this.getThemeAsync(),
+            this.getClockFaceAsync(),
+            this.getWeekStartDayAsync()]).then(()=>{});
     }
 
-    async getTheme(): Promise<string> {
+    async getThemeAsync(): Promise<string> {
         if (this.theme === '') {
             this.theme = await this.getValue(StoreKey_Theme);
         }
         return this.theme;
     }
 
-    async getClockFace(): Promise<string> {
+    async getClockFaceAsync(): Promise<string> {
         if (this.clockFace === '') {
             this.clockFace = await this.getValue(StoreKey_ClockFace);
         }
         return this.clockFace
     }
 
-    async getWeekStartDay(): Promise<string> {
-        if (this.weekStartDay === '') {
-            this.weekStartDay = await this.getValue(StoreKey_WeekStartDay);
+    async getWeekStartDayAsync(): Promise<number> {
+        if (this.weekStartDay === 0) {
+            this.weekStartDay = await Number(this.getValue(StoreKey_WeekStartDay));
+            this.weekStartDay = !this.weekStartDay ? 1 : this.weekStartDay;
         }
         return this.weekStartDay;
     }
 
     async setTheme(newTheme: string): Promise<void> {
+        this.theme = newTheme;
         return this.setValue(StoreKey_Theme, newTheme);
     }
 
     async setClockFace(newClockFace: string): Promise<void> {
+        this.clockFace = newClockFace;
         return this.setValue(StoreKey_ClockFace, newClockFace);
     }
 
-    async setWeekStartDay(newStartDay: string): Promise<void> {
-        return this.setValue(StoreKey_WeekStartDay, newStartDay);
+    async setWeekStartDay(newStartDay: number): Promise<void> {
+        this.weekStartDay = newStartDay;
+        return this.setValue(StoreKey_WeekStartDay, String(newStartDay));
     }
 
     async getValue(key: string): Promise<string> {
@@ -67,5 +71,17 @@ export class ConfigManager {
             return await AsyncStorage.setItem(key, newValue || '');
         } catch (error) {
         }
+    }
+
+    getTheme(): string {
+        return this.theme;
+    }
+
+    getClockFace(): string {
+        return this.clockFace
+    }
+
+    getWeekStartDay(): number {
+        return this.weekStartDay;
     }
 }
