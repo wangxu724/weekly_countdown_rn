@@ -35,6 +35,7 @@ export class Clock extends Component<Props> {
     componentWillUnmount() {
         clearInterval(this.interval);
     }
+
     render() {
         const day = ('0' + String(7 - this.state.nDay)).slice(-2);
         const hour = ('0' + String(23 - this.state.nHour)).slice(-2);
