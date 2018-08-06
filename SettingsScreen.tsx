@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, StatusBar, Picker } from 'react-native';
+import { View, Text, StyleSheet, Picker } from 'react-native';
 
 import { ConfigManager } from './ConfigManager';
 
@@ -46,7 +46,7 @@ export class SettingsScreen extends Component<Props> {
                         prompt={'Choose a theme'}
                         selectedValue={this.state.theme}
                         onValueChange={this.onThemeSelected}>
-                        <Picker.Item label="White" value="white" />
+                        <Picker.Item label="Beige" value="beige" />
                         <Picker.Item label="Yellow" value="yellow" />
                     </Picker>
                 </View>

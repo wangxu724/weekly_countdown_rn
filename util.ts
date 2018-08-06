@@ -14,3 +14,4 @@ export function getConfigManager(): ConfigManager {
 export function appReady(): Promise<void> {
     return getConfigManager().initialize();
 }
+

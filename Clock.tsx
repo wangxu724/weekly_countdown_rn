@@ -42,19 +42,23 @@ export class Clock extends Component<Props> {
         const minute =('0' + String(59 - this.state.nMinute)).slice(-2);
         const second =('0' + String(59 - this.state.nSecond)).slice(-2);
         const flashStyle = this.state.nSecond%2 == 0
-            ? styles.flash1
-            : styles.flash2;
+            ? [styles.flashCommon, styles.flashShow]
+            : [styles.flashCommon, styles.flashHide];
 
         return (
-            <View style={styles.containerStyle}>
-                <View style={styles.viewStyle}>
-                    {this.renderAllProgressBar()}
+            <View style={[styles.containerCommon, getBackgroundColor(this.configManager.getTheme())]}>
+                <View style={[styles.viewCommon, styles.viewSmallMargin]}>
+                    {this.renderWeekProgressBar()}
                 </View>
 
-                <View style={styles.viewStyle}>
+                <View style={[styles.viewCommon,styles.viewSmallMargin]}>
                     <Text style={styles.clockStyle}>{hour}</Text>
                     <Text style={flashStyle}> : </Text>
                     <Text style={styles.clockStyle}>{minute}</Text>
+                </View>
+
+                <View style={[styles.viewCommon, styles.viewLargeMargin]}>
+                    {this.renderMinuteProgressBar()}
                 </View>
             </View>
         );
@@ -76,11 +80,11 @@ export class Clock extends Component<Props> {
         });
     }
 
-    renderAllProgressBar() {
-        return [1,2,3,4,5,6,7].map(n => this.renderProgressBar(n));
+    renderWeekProgressBar() {
+        return [1,2,3,4,5,6,7].map(n => this.renderWeekDayProgressBar(n));
     }
 
-    renderProgressBar(id: number) {
+    renderWeekDayProgressBar(id: number) {
         let progress = 0;
         if (id < this.state.nDay) {
             progress = 1;
@@ -90,9 +94,25 @@ export class Clock extends Component<Props> {
 
         return (
             <Bar
-                style={{margin:1}}
+                style={{margin:3}}
                 key={id}
                 width={45}
+                height={10}
+                borderWidth={1}
+                color={PASSED_DAY_COLOR}
+                unfilledColor={LEFT_DAY_COLOR}
+                borderColor={'black'}
+                progress={progress}>
+            </Bar>
+        );
+    }
+
+    renderMinuteProgressBar() {
+        let progress = this.state.nSecond/60;
+        return (
+            <Bar
+                width={340}
+                height={5}
                 borderWidth={1}
                 color={PASSED_DAY_COLOR}
                 unfilledColor={LEFT_DAY_COLOR}
@@ -103,9 +123,19 @@ export class Clock extends Component<Props> {
     }
 }
 
+export function getBackgroundColor(theme: string): any {
+    switch(theme) {
+        case 'white':
+            return styles.constainerWhite;
+        case 'beige':
+            return styles.constainerBeige;
+        default:
+            return styles.constainerYellow;
+    }
+}
+
 const styles = StyleSheet.create({
-    containerStyle: {
-        backgroundColor: '#FFC90E',
+    containerCommon: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
@@ -115,26 +145,40 @@ const styles = StyleSheet.create({
         right:0,
         position: 'absolute'
     },
-    viewStyle: {
+    constainerYellow: {
+        backgroundColor: '#FFC90E',
+    },
+    constainerBeige: {
+        backgroundColor: '#F5F5DC',
+    },
+    constainerWhite: {
+        backgroundColor: 'white',
+    },
+    viewCommon: {
         flexDirection: 'row',
-        padding: 10,
         justifyContent: 'center'
+    },
+    viewLargeMargin: {
+        margin: 15,
+    },
+    viewSmallMargin: {
+        margin: 25,
     },
     clockStyle: {
         fontWeight: 'bold',
         fontSize: 100,
         color: 'black'
     },
-    flash1: {
+    flashCommon: {
         fontWeight: 'bold',
         fontSize: 92,
         color: 'black',
         opacity: 1
     },
-    flash2: {
-        fontWeight: 'bold',
-        fontSize: 92,
-        color: 'black',
+    flashShow: {
+        opacity: 1
+    },
+    flashHide: {
         opacity: 0.05
     }
 });
