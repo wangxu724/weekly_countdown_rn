@@ -1,11 +1,13 @@
-import { AsyncStorage } from "react-native"
+import { AsyncStorage } from "react-native";
+import { Theme } from './SettingsScreen';
+import { toTheme } from './util';
 
 const StoreKey_Theme = 'store_key_theme';
 const StoreKey_ClockFace = 'store_key_clock_face';
 const StoreKey_WeekStartDay = 'store_key_weeky_start_day';
 
 export class ConfigManager {
-    private theme = '';
+    private theme = Theme.NotAvailable;
     private clockFace = '';
     private weekStartDay = 0;
 
@@ -16,9 +18,9 @@ export class ConfigManager {
             this.getWeekStartDayAsync()]).then(()=>{});
     }
 
-    async getThemeAsync(): Promise<string> {
-        if (this.theme === '') {
-            this.theme = await this.getValue(StoreKey_Theme);
+    async getThemeAsync(): Promise<Theme> {
+        if (this.theme === Theme.NotAvailable) {
+            this.theme = toTheme(await this.getValue(StoreKey_Theme));
         }
         return this.theme;
     }
@@ -38,9 +40,9 @@ export class ConfigManager {
         return this.weekStartDay;
     }
 
-    async setTheme(newTheme: string): Promise<void> {
+    async setTheme(newTheme: Theme): Promise<void> {
         this.theme = newTheme;
-        return this.setValue(StoreKey_Theme, newTheme);
+        return this.setValue(StoreKey_Theme, String(newTheme));
     }
 
     async setClockFace(newClockFace: string): Promise<void> {
@@ -73,7 +75,7 @@ export class ConfigManager {
         }
     }
 
-    getTheme(): string {
+    getTheme(): Theme {
         return this.theme;
     }
 

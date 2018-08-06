@@ -2,8 +2,14 @@ import React, {Component} from 'react';
 import { View, Text, StyleSheet, Picker } from 'react-native';
 
 import { ConfigManager } from './ConfigManager';
-
 import { getConfigManager } from './util';
+
+
+export enum Theme {
+    NotAvailable,
+    Yellow = 0,
+    Beige,
+}
 
 type Props = {
 };
@@ -14,9 +20,9 @@ export class SettingsScreen extends Component<Props> {
     };
 
     state = {
-        theme: 'white',
-        clockFace: 'fake clockFace',
-        weekStartDay: 'fake weekStartDay'
+        theme: Theme.Yellow,
+        clockFace: '',
+        weekStartDay: 1
     };
 
     configManager = getConfigManager();
@@ -46,12 +52,12 @@ export class SettingsScreen extends Component<Props> {
                         prompt={'Choose a theme'}
                         selectedValue={this.state.theme}
                         onValueChange={this.onThemeSelected}>
-                        <Picker.Item label="Beige" value="beige" />
-                        <Picker.Item label="Yellow" value="yellow" />
+                        <Picker.Item label="Yellow" value={Theme.Yellow} />
+                        <Picker.Item label="Beige" value={Theme.Beige} />
                     </Picker>
                 </View>
 
-                <View style={styles.setting}>
+                {/* <View style={styles.setting}>
                     <Text style={styles.text}>Clock face</Text>
                     <Picker
                         style={styles.picker}
@@ -60,7 +66,7 @@ export class SettingsScreen extends Component<Props> {
                         onValueChange={this.onClockFaceSelected}>
                         <Picker.Item label="Text" value="text" />
                     </Picker>
-                </View>
+                </View> */}
 
                 <View style={styles.setting}>
                     <Text style={styles.text}>Week start on</Text>
@@ -82,7 +88,7 @@ export class SettingsScreen extends Component<Props> {
       );
     }
 
-    onThemeSelected = (value: any, index: number) => {
+    onThemeSelected = (value: Theme, index: number) => {
         this.configManager.setTheme(value);
         this.setState({theme: value});
     }

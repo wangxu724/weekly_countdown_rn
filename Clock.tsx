@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, View } from 'react-native';
 import { Bar } from 'react-native-progress';
 
-import { getConfigManager } from './util';
+import { getConfigManager, getBackgroundColor } from './util';
 
 const PASSED_DAY_COLOR = '#32CD32';
 const CURRENT_DAY_COLOR = '#1E90FF'
 const LEFT_DAY_COLOR = '#1E90FF';
+const PASSED_SECOND_COLOR  = 'red';
+const LEFT_SECOND_COLOR = '#32CD32';
 
 type Props = {};
 
@@ -46,7 +48,7 @@ export class Clock extends Component<Props> {
             : [styles.flashCommon, styles.flashHide];
 
         return (
-            <View style={[styles.containerCommon, getBackgroundColor(this.configManager.getTheme())]}>
+            <View style={[styles.containerCommon, {backgroundColor: getBackgroundColor(this.configManager.getTheme())}]}>
                 <View style={[styles.viewCommon, styles.viewSmallMargin]}>
                     {this.renderWeekProgressBar()}
                 </View>
@@ -114,23 +116,12 @@ export class Clock extends Component<Props> {
                 width={340}
                 height={5}
                 borderWidth={1}
-                color={PASSED_DAY_COLOR}
-                unfilledColor={LEFT_DAY_COLOR}
+                color={PASSED_SECOND_COLOR}
+                unfilledColor={LEFT_SECOND_COLOR}
                 borderColor={'black'}
                 progress={progress}>
             </Bar>
         );
-    }
-}
-
-export function getBackgroundColor(theme: string): any {
-    switch(theme) {
-        case 'white':
-            return styles.constainerWhite;
-        case 'beige':
-            return styles.constainerBeige;
-        default:
-            return styles.constainerYellow;
     }
 }
 
@@ -145,24 +136,15 @@ const styles = StyleSheet.create({
         right:0,
         position: 'absolute'
     },
-    constainerYellow: {
-        backgroundColor: '#FFC90E',
-    },
-    constainerBeige: {
-        backgroundColor: '#F5F5DC',
-    },
-    constainerWhite: {
-        backgroundColor: 'white',
-    },
     viewCommon: {
         flexDirection: 'row',
         justifyContent: 'center'
     },
-    viewLargeMargin: {
-        margin: 15,
-    },
     viewSmallMargin: {
-        margin: 25,
+        margin: 20,
+    },
+    viewLargeMargin: {
+        margin: 28,
     },
     clockStyle: {
         fontWeight: 'bold',
