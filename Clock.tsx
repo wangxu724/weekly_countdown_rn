@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, View } from 'react-native';
 import { Bar } from 'react-native-progress';
 
+import { FullScreen } from './FullScreen';
 import { getConfigManager, getBackgroundColor } from './util';
 
 const PASSED_DAY_COLOR = '#32CD32';
@@ -31,10 +32,12 @@ export class Clock extends Component<Props> {
     }
 
     componentDidMount() {
+        FullScreen.on();
         this.interval = setInterval(this.updateTime, 500);
     }
 
     componentWillUnmount() {
+        FullScreen.off();
         clearInterval(this.interval);
     }
 
