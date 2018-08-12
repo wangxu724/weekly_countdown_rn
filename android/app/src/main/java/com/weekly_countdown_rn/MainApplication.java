@@ -8,7 +8,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.corbt.keepawake.KCKeepAwakePackage;
-import com.weekly_countdown_rn.fullScreen.FullScreenPackage;
 
 
 import java.util.Arrays;
@@ -26,8 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new KCKeepAwakePackage(),
-          new FullScreenPackage()
+          new KCKeepAwakePackage()
       );
     }
 
