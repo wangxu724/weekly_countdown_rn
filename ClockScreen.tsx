@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TouchableWithoutFeedback, StatusBar} from 'react-native';
+import {Platform, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import KeepAwake from 'react-native-keep-awake';
 
@@ -28,7 +28,6 @@ export class ClockScreen extends Component<Props> {
         return (
             <TouchableWithoutFeedback onLongPress={this.onLongPress}>
                 <View style={styles.container}>
-                    <StatusBar hidden={true}/>
                     <Clock> </Clock>
                     <KeepAwake></KeepAwake>
                 </View>
