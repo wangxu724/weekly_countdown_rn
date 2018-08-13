@@ -21,6 +21,7 @@ export class ConfigManager {
     async getThemeAsync(): Promise<Theme> {
         if (this.theme === Theme.NotAvailable) {
             this.theme = toTheme(await this.getValue(StoreKey_Theme));
+            this.theme = this.theme === Theme.NotAvailable ? Theme.Yellow : this.theme;
         }
         return this.theme;
     }
@@ -34,8 +35,8 @@ export class ConfigManager {
 
     async getWeekStartDayAsync(): Promise<number> {
         if (this.weekStartDay === 0) {
-            this.weekStartDay = await Number(this.getValue(StoreKey_WeekStartDay));
-            this.weekStartDay = !this.weekStartDay ? 1 : this.weekStartDay;
+            this.weekStartDay = Number(await this.getValue(StoreKey_WeekStartDay));
+            this.weekStartDay = this.weekStartDay === 0 ? 1 : this.weekStartDay;
         }
         return this.weekStartDay;
     }

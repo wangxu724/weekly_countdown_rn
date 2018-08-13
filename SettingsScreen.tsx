@@ -6,8 +6,8 @@ import { getConfigManager } from './util';
 
 
 export enum Theme {
-    NotAvailable,
-    Yellow = 0,
+    NotAvailable = 0,
+    Yellow,
     Beige,
 }
 
