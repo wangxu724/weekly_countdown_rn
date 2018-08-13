@@ -43,8 +43,13 @@ export class ClockScreen extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    top:0,
+    bottom:0,
+    left:0,
+    right:0,
+    position: 'absolute',
+    backgroundColor: '#FFC90E',
   }
 });

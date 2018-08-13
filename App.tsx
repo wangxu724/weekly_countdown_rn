@@ -13,11 +13,11 @@ import { createStackNavigator } from 'react-navigation';
 import { ConfigManager } from './ConfigManager';
 import { ClockScreen } from './ClockScreen';
 import { SettingsScreen } from './SettingsScreen';
-import { SplashScreen } from './SplashScreen';
+import { AppReadyScreen } from './AppReadyScreen';
 
 
 const App = createStackNavigator({
-    SplashScreen: { screen: SplashScreen },
+    AppReadyScreen: { screen: AppReadyScreen },
     ClockScreen: { screen: ClockScreen },
     SettingsScreen: { screen: SettingsScreen }
   });

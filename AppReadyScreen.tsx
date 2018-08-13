@@ -9,7 +9,7 @@ import { ConfigManager } from './ConfigManager';
 type Props = {
     navigation: any
 };
-export class SplashScreen extends Component<Props> {
+export class AppReadyScreen extends Component<Props> {
     static navigationOptions = {
         header: null,
     };
@@ -24,9 +24,22 @@ export class SplashScreen extends Component<Props> {
 
     render() {
         return (
-            <View style={{backgroundColor: '#FFC90E'}}>
-                {/* <Text>This is splash screen</Text> */}
+            <View style={styles.container}>
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        top:0,
+        bottom:0,
+        left:0,
+        right:0,
+        position: 'absolute',
+        backgroundColor: '#FFC90E',
+      }
+  });
