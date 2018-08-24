@@ -15,9 +15,6 @@ import { Clock} from './Clock';
 import { SettingsScreen } from './SettingsScreen';
 import { getConfigManager } from './util';
 
-import { ConfigManager } from './ConfigManager';
-
-
 type Props = {
     navigation: any,
 };
@@ -45,7 +42,7 @@ export class ClockScreen extends Component<Props> {
 
     componentDidMount() {
         if (this.configManager.getIsFirstTimeLaunch()) {
-            ToastAndroid.show('Tips: Long press the screen to go to settings!', ToastAndroid.SHORT);
+            ToastAndroid.show('Tips: Long press the screen to go to settings!', ToastAndroid.LONG);
             this.configManager.setIsFirstTimeLaunchAsync(false);
         }
     }

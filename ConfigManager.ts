@@ -46,7 +46,7 @@ export class ConfigManager {
     }
 
     async getIsFirstTimeLaunchAsync(): Promise<boolean> {
-        this.isFirstTimeLaunch = "true" === await this.getValue(StoreKey_IsFirstTimeLaunch);
+        this.isFirstTimeLaunch = !("false" === await this.getValue(StoreKey_IsFirstTimeLaunch));
         return this.isFirstTimeLaunch;
     }
 
@@ -79,7 +79,7 @@ export class ConfigManager {
                 return '';
             }
         } catch (error) {
-               return '';
+            return '';
         }
     }
 
