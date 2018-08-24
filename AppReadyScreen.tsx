@@ -17,7 +17,7 @@ export class AppReadyScreen extends Component<Props> {
         const { navigate } = this.props.navigation;
 
         appReady().then(() => {
-            setTimeout(() => { navigate('ClockScreen', {}) }, 1000);
+            setTimeout(() => { navigate('ClockScreen', {}) }, 1500);
         });
     }
 
