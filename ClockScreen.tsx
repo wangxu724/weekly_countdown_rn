@@ -7,13 +7,15 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
+import {Platform, StyleSheet, ToastAndroid, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import KeepAwake from 'react-native-keep-awake';
 
-import { ConfigManager } from './ConfigManager';
 import { Clock} from './Clock';
 import { SettingsScreen } from './SettingsScreen';
+import { getConfigManager } from './util';
+
+import { ConfigManager } from './ConfigManager';
 
 
 type Props = {
@@ -23,6 +25,8 @@ export class ClockScreen extends Component<Props> {
     static navigationOptions = {
         header: null,
     };
+
+    configManager = getConfigManager();
 
     render() {
         return (
@@ -37,6 +41,13 @@ export class ClockScreen extends Component<Props> {
 
     onLongPress = () => {
         this.props.navigation.navigate('SettingsScreen', {});
+    }
+
+    componentDidMount() {
+        if (this.configManager.getIsFirstTimeLaunch()) {
+            ToastAndroid.show('Tips: Long press the screen to go to settings!', ToastAndroid.SHORT);
+            this.configManager.setIsFirstTimeLaunchAsync(false);
+        }
     }
 }
 

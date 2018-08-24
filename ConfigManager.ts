@@ -5,17 +5,21 @@ import { toTheme } from './util';
 const StoreKey_Theme = 'store_key_theme';
 const StoreKey_ClockFace = 'store_key_clock_face';
 const StoreKey_WeekStartDay = 'store_key_weeky_start_day';
+const StoreKey_IsFirstTimeLaunch = 'store_key_is_first_time_launch';
 
 export class ConfigManager {
     private theme = Theme.NotAvailable;
     private clockFace = '';
     private weekStartDay = 0;
+    private isFirstTimeLaunch = true;
 
     initialize(): Promise<void> {
         return Promise.all([
             this.getThemeAsync(),
             this.getClockFaceAsync(),
-            this.getWeekStartDayAsync()]).then(()=>{});
+            this.getWeekStartDayAsync(),
+            this.getIsFirstTimeLaunchAsync(),
+        ]).then(()=>{});
     }
 
     async getThemeAsync(): Promise<Theme> {
@@ -41,6 +45,11 @@ export class ConfigManager {
         return this.weekStartDay;
     }
 
+    async getIsFirstTimeLaunchAsync(): Promise<boolean> {
+        this.isFirstTimeLaunch = "true" === await this.getValue(StoreKey_IsFirstTimeLaunch);
+        return this.isFirstTimeLaunch;
+    }
+
     async setTheme(newTheme: Theme): Promise<void> {
         this.theme = newTheme;
         return this.setValue(StoreKey_Theme, String(newTheme));
@@ -54,6 +63,11 @@ export class ConfigManager {
     async setWeekStartDay(newStartDay: number): Promise<void> {
         this.weekStartDay = newStartDay;
         return this.setValue(StoreKey_WeekStartDay, String(newStartDay));
+    }
+
+    async setIsFirstTimeLaunchAsync(newValue: boolean): Promise<void> {
+        this.isFirstTimeLaunch = newValue;
+        return this.setValue(StoreKey_IsFirstTimeLaunch, String(newValue));
     }
 
     async getValue(key: string): Promise<string> {
@@ -86,5 +100,9 @@ export class ConfigManager {
 
     getWeekStartDay(): number {
         return this.weekStartDay;
+    }
+
+    getIsFirstTimeLaunch(): boolean {
+        return this.isFirstTimeLaunch;
     }
 }

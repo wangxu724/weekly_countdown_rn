@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet, Picker } from 'react-native';
 
-import { ConfigManager } from './ConfigManager';
 import { getConfigManager } from './util';
 
 
