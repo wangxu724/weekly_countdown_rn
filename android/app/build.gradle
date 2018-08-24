@@ -98,11 +98,11 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.weekly_countdown_rn"
+        applicationId "weekly.countdown.kx"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 18
+        versionName "4.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
