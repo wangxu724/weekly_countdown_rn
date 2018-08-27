@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Animated, Easing, Image, Text, View, TouchableWithoutFeedback } from 'react-native';
+import {Platform, StyleSheet, Animated, Easing, Text, View, ActivityIndicator, TouchableWithoutFeedback } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 import { appReady } from './util';
@@ -24,10 +24,7 @@ export class AppReadyScreen extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
-                <Image
-                    style={styles.image}
-                    source={require('./icon.png')}
-                />
+                <ActivityIndicator size="large" color="grey" />
             </View>
         );
     }
@@ -46,8 +43,4 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: '#FFC90E',
       },
-    image: {
-        height: 150,
-        width: 150,
-    }
   });

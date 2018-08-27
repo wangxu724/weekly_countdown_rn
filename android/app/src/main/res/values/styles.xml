@@ -1,10 +1,10 @@
 <resources>
-    <color name="background">#FFC90E</color>
+    <color name="background_color">#FFC90E</color>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowBackground">@layout/splash_screen</item>
     </style>
 
 </resources>
