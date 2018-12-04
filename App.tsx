@@ -8,15 +8,15 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createSwitchNavigator } from 'react-navigation';
 
-import { ConfigManager } from './ConfigManager';
-import { ClockScreen } from './ClockScreen';
-import { SettingsScreen } from './SettingsScreen';
-import { AppReadyScreen } from './AppReadyScreen';
+import { ConfigManager } from './src/ConfigManager';
+import { ClockScreen } from './src/ClockScreen';
+import { SettingsScreen } from './src/SettingsScreen';
+import { AppReadyScreen } from './src/AppReadyScreen';
 
 
-const App = createStackNavigator({
+const App = createSwitchNavigator({
     AppReadyScreen: { screen: AppReadyScreen },
     ClockScreen: { screen: ClockScreen },
     SettingsScreen: { screen: SettingsScreen }
